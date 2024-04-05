@@ -90,7 +90,7 @@ functions:
 resources:
   Resources:
     CustomerTable:
-      Type: AWS::Dynamodb::Table
+      Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.DryCleaningService}
         AttributeDefinitions: 

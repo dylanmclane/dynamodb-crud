@@ -1,0 +1,104 @@
+service: dynamodb-crud-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-west-2
+  environment: 
+    DYNAMODB_TABLE_NAME:
+      ${self:custom.DryCleaningService}
+
+custom: 
+  DryCleaningService: customer-table-${self:provider.stage}
+
+plugins:
+  - serverless-iam-roles-per-function
+
+functions:
+  getCustomer:
+    handler: api.getCustomer
+    name: get-customer
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+        path: customer/{customerID}
+        method: GET
+    iamRoleStatments:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt DryCleaningService.Arn
+  addCustomer:
+    handler: api.createCustomer
+    name: create-customer
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+        path: customer
+        method: POST
+    iamRoleStatments:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt DryCleaningService.Arn
+  updateCustomer:
+    handler: api.createCustomer
+    name: create-customer
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+        path: customer/{customerID}
+        method: PUT
+    iamRoleStatments:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt DryCleaningService.Arn
+  deleteCustomer:
+    handler: api.deleteCustomer
+    name: delete-customer
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+        path: customer
+        method: DELETE
+    iamRoleStatments:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt DryCleaningService.Arn
+  getAllCustomers:
+    handler: api.getAllCustomers
+    name: get-all-customers
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+        path: customer
+        method: GET
+    iamRoleStatments:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt DryCleaningService.Arn
+
+resources:
+  Resources:
+    CustomerTable:
+      Type: AWS::Dynamodb::Table
+      Properties:
+        TableName: ${self:custom.DryCleaningService}
+        AttributeDefinitions: 
+          - AttributeName: customerID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: customerID
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

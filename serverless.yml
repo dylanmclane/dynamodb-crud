@@ -89,7 +89,7 @@ functions:
 
 resources:
   Resources:
-    CustomerTable:
+    DryCleaningService:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.DryCleaningService}

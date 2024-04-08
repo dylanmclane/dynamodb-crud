@@ -23,9 +23,9 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-        path: customer/{customerID}
-        method: GET
-    iamRoleStatments:
+          path: customer/{customerID}
+          method: GET
+    iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:GetItem"
@@ -37,9 +37,9 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-        path: customer
-        method: POST
-    iamRoleStatments:
+          path: customer
+          method: POST
+    iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
@@ -51,9 +51,9 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-        path: customer/{customerID}
-        method: PUT
-    iamRoleStatments:
+          path: customer/{customerID}
+          method: PUT
+    iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:UpdateItem"
@@ -65,9 +65,9 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-        path: customer
-        method: DELETE
-    iamRoleStatments:
+          path: customer
+          method: DELETE
+    iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:DeleteItem"
@@ -79,9 +79,9 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-        path: customer
-        method: GET
-    iamRoleStatments:
+          path: customer
+          method: GET
+    iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:Scan"

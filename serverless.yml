@@ -45,8 +45,8 @@ functions:
           - "dynamodb:PutItem"
         Resource: !GetAtt DryCleaningService.Arn
   updateCustomer:
-    handler: api.createCustomer
-    name: create-customer
+    handler: api.updateCustomer
+    name: update-customer
     memorySize: 128 # mb
     timeout: 5 # seconds
     events:

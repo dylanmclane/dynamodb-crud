@@ -95,7 +95,7 @@ resources:
         TableName: ${self:custom.DryCleaningService}
         AttributeDefinitions: 
           - AttributeName: customerID
-            AttributeType: N
+            AttributeType: S
         KeySchema:
           - AttributeName: customerID
             KeyType: HASH

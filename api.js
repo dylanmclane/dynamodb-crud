@@ -154,10 +154,35 @@ const getAllCustomers = async (event) => {
     return response;
 };
 
+// const getAnswer = async (event) => {
+//     const response = { statusCode: 200 };
+    
+//     try {
+//         const { Items } = await db.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME }));
+
+//         response.body = JSON.stringify({
+//             message: "Successfully retrieved all customers.",
+//             data: Items.map((item) => unmarshall(item)),
+//             Items,
+//         });
+//     } catch (e) {
+//         console.error(e);
+//         response.statusCode = 500;
+//         response.body = JSON.stringify({
+//             message: "Failed to connect to LLM.",
+//             errorMsg: e.message,
+//             errorStack: e.stack,
+//         })
+//     }
+    
+//     return response;
+// };
+
 module.exports = {
     getCustomer,
     createCustomer,
     updateCustomer,
     deleteCustomer,
-    getAllCustomers
+    getAllCustomers,
+    // getAnswer,
 };

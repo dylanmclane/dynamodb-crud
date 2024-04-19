@@ -8,6 +8,31 @@ const {
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
+const getAnswer = async (event) => {
+    const response = { statusCode: 200 };
+    
+    try {
+        // Make a request to the Google Gemini API
+        const geminiResponse = await fetch("https://api.gemini.com");
+        const data = await geminiResponse.json();
+        
+        response.body = JSON.stringify({
+            message: "Successfully retrieved data from Gemini API.",
+            data,
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: "Failed to retrieve data from Gemini API.",
+            errorMsg: e.message,
+            errorStack: e.stack,
+        });
+    }
+    
+    return response;
+};
+
 const getCustomer = async (event) => {
     const response = { statusCode: 200 };
     
@@ -184,5 +209,5 @@ module.exports = {
     updateCustomer,
     deleteCustomer,
     getAllCustomers,
-    // getAnswer,
+    getAnswer,
 };
